@@ -13,12 +13,28 @@ exports.createCourse = async (req, res) => {
 		message: error.details[0].message
 	});
 
-	const course = new CourseModel(_.pick(req.body, ['title', 'description', 'author', 'price']));
+	const user = await UserModel.findById(req.body.authorId);
+	if (!user) return res.send({ error: 'User not found.' }).status(400);
+
+	const course = new CourseModel({
+		title: req.body.title,
+		description: req.body.description,
+		author: {
+			_id: user._id,
+			first_name: user.first_name,
+			last_name: user.last_name
+		},
+		price: req.body.price
+	});
 	const result = await course.save();
 
 	res.send({
 		success: true,
-		message: "User has created successfully.",
-		data: result
+		message: "Course has created successfully.",
+		data: result,
 	});
 };
+
+exports.updateCourse = async (req, res) => {
+
+}

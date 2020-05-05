@@ -75,7 +75,6 @@ userSchema.methods.generatePasswordReset = function () {
 const UserModel = mongoose.model('User', userSchema);
 
 function validateLogin(req) {
-
 	const schema = Joi.object({
 		email: Joi.string().min(5).max(255).required().email(),
 		password: Joi.string().min(6).max(255).required(),
@@ -94,6 +93,16 @@ function validateUserRegistration(req) {
 	return schema.validate(req.body);
 }
 
+function validateUpdateUser(req) {
+	const schema = Joi.object({
+		first_name: Joi.string().min(3).max(50).required(),
+		last_name: Joi.string().min(3).max(50).required(),
+		phone: Joi.number().min(10).required()
+	});
+	return schema.validate(req.body);
+}
+
 exports.UserModel = UserModel;
 exports.validateUser = validateUserRegistration;
 exports.validate = validateLogin;
+exports.validateUpdateUser = validateUpdateUser;

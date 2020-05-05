@@ -24,12 +24,6 @@ const admin = {
         'create:any': ['*'],
         'update:any': ['*'],
         'delete:any': ['*']
-    },
-    author: {
-        ...registered.author,
-        'create:any': ['*'],
-        'update:any': ['*'],
-        'delete:any': ['*']
     }
 }
 

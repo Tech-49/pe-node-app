@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Joi = require('@hapi/joi');
+Joi.objectId = require('joi-objectid')(Joi);
 
 const courseSchema = new mongoose.Schema({
 	title: {
@@ -17,7 +18,22 @@ const courseSchema = new mongoose.Schema({
 		trim: true
 	},
 	author: {
-		type: String,
+		type: new mongoose.Schema({
+			first_name: {
+				type: String,
+				required: true,
+				minlength: 3,
+				maxlength: 50,
+				trim: true
+			},
+			last_name: {
+				type: String,
+				required: true,
+				minlength: 3,
+				maxlength: 50,
+				trim: true
+			},
+		}),
 		required: true
 	},
 	price: {
@@ -29,11 +45,10 @@ const courseSchema = new mongoose.Schema({
 const CourseModel = mongoose.model('Course', courseSchema);
 
 function validateCourse(req) {
-
 	const schema = Joi.object({
 		title: Joi.string().min(3).max(50).required(),
 		description: Joi.string().min(10).max(255).required(),
-		author: Joi.string().required(),
+		authorId: Joi.objectId().required(),
 		price: Joi.number().required()
 	});
 	return schema.validate(req.body);
