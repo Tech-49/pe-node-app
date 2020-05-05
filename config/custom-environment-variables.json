@@ -1,0 +1,5 @@
+{
+	"db": "app_db",
+	"jwtPrivateKey":"app_jwt_private_key",
+	"SENDGRID_API_KEY":"app_SENDGRID_API_KEY"
+}

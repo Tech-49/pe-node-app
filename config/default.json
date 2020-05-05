@@ -1,0 +1,5 @@
+{
+	"db": "mongodb://localhost/programming_excercise",
+	"jwtPrivateKey": "developmentuseonly",
+	"SENDGRID_API_KEY": "SG.developmentuseonly"
+}
