@@ -1,9 +1,32 @@
 const { CourseModel, validate } = require('../models/course');
+const { validObjectId } = require('../helpers/common');
 const _ = require('lodash');
 
 exports.getCourses = async function (req, res) {
 	let courses = await CourseModel.find();
 	res.json({ success: true, data: courses });
+}
+
+exports.getCourse = async (req, res) => {
+
+	if (!req.params.id) {
+		return res.send({
+			success: false,
+			message: "Course is not provided.",
+		});
+	}
+
+	if (!validObjectId(req.params.id)) return res.send({
+		success: false,
+		message: "Invalid course.",
+	});
+
+	const course = await CourseModel.findOne({ '_id': req.params.id });
+
+	res.send({
+		success: true,
+		data: course
+	});
 }
 
 exports.createCourse = async (req, res) => {
@@ -34,7 +57,3 @@ exports.createCourse = async (req, res) => {
 		data: result,
 	});
 };
-
-exports.updateCourse = async (req, res) => {
-
-}
